@@ -10,7 +10,10 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-
+" Plugin 'szw/vim-tags'
+" Plugin 'vim-scripts/functionlist.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'fatih/vim-go'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -60,9 +63,7 @@ set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 
 "ColorScheme
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-endif
+set t_Co=256
 
 colorscheme vendetta
 
@@ -94,6 +95,13 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+"let g:pymode_options_max_line_length=500
+let g:syntastic_python_checkers=['flake8']
+let g:syntastic_python_flake8_args='--ignore=E302,E501,E225,E111'
 
 
+"Tag generation
+"let g:vim_tags_auto_generate = 1
 
+" Map for functions
+nmap <F8> :TagbarToggle<CR> 
