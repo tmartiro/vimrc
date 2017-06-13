@@ -1,6 +1,15 @@
-set nu
+" set relativenumber
 set nocompatible              " be iMproved, required
+set hlsearch
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set autoindent
+set smartindent
+set hidden
 filetype off                  " required
+
+
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -10,32 +19,25 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-" Plugin 'szw/vim-tags'
-" Plugin 'vim-scripts/functionlist.vim'
+
+" Solarized themes
+Plugin 'altercation/vim-colors-solarized'
+" Plugin 'wookiehangover/jshint.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'fatih/vim-go'
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
+" Plugin 'fatih/vim-go'
 Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
-" Git plugin not hosted on GitHub
 Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
-"Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'bling/vim-airline'
 Plugin 'nanotech/jellybeans.vim'
-Plugin 'scrooloose/syntastic'
 Plugin 'evgenyzinoviev/vim-vendetta'
+Plugin 'eshion/vim-sync'
+Plugin 'vim-syntastic/syntastic'
+"Plugin 'Nopik/vim-nerdtree-direnter'
+"Plugin 'jistr/vim-nerdtree-tabs'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -52,11 +54,18 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+
 "Mappings for a tab
 map <C-t> :NERDTreeToggle<CR>
-map <C-Right> :tabn<CR>
-map <C-Left> :tabp<CR>
+"let g:NERDTreeMapOpenInTab='<CR>'
+"let g:NERDTreeMapActivateNode='<CR>'
+
+
+map <C-l> :bn<CR>
+map <C-;> :bp<CR>
 map <C-n> :tabnew<CR>
+"nnoremap <C-U> <ESC>:call SyncUploadFile()<CR>
+autocmd BufWritePost * :call SyncUploadFile()
 
 "GUI vim options
 set guioptions-=m  "remove menu bar
@@ -64,7 +73,9 @@ set guioptions-=T  "remove toolbar
 
 "ColorScheme
 set t_Co=256
-
+syntax enable
+set background=dark
+"colorscheme solarized
 colorscheme vendetta
 
 "StatusLine Config
@@ -91,17 +102,24 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 "let g:pymode_options_max_line_length=500
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_flake8_args='--ignore=E302,E501,E225,E111'
-
+let g:syntastic_javascript_checkers = ['eslint']
 
 "Tag generation
-"let g:vim_tags_auto_generate = 1
+let g:vim_tags_auto_generate = 1
 
 " Map for functions
-nmap <F8> :TagbarToggle<CR> 
+nmap <F8> :TagbarToggle<CR>
+"let g:JSHintHighlightErrorLine = 0
+
+"hi clear SpellBad
+"hi SpellBad cterm=bold ctermfg=red
+"
+"
+"let g:nerdtree_tabs_open_on_console_startup=1
