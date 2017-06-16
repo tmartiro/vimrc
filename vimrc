@@ -19,7 +19,7 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-
+Plugin 'terryma/vim-multiple-cursors'
 " Solarized themes
 Plugin 'altercation/vim-colors-solarized'
 " Plugin 'wookiehangover/jshint.vim'
