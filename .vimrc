@@ -30,7 +30,7 @@ Plug 'dylon/vim-antlr'
 Plug 'govim/govim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'yami-beta/asyncomplete-omni.vim'
-
+Plug 'preservim/nerdtree'
 call plug#end()
 
 colorscheme gruvbox
@@ -45,21 +45,21 @@ endif
 let g:ctrlp_use_caching = 0
 
 nnoremap <leader>u :UndotreeShow<CR>
-nnoremap <leader>pv :wincmd v<bar>:Ex <bar> :vertical resize 30<CR>
+"nnoremap <leader>pv :wincmd v<bar>:Ex <bar> :vertical resize 30<CR>
+nnoremap <leader>pv :NERDTree<CR>
 nnoremap <leader>ps :Rg<SPACE>
 nnoremap <silent><leader>= :vertical resize +5<CR>
 nnoremap <silent><leader>- :vertical resize -5<CR>
-
 nnoremap <leader>tv :below vert term<CR>
 nnoremap <leader>th :below term<CR>
 
-nmap <silent> <buffer> <Leader>h : <C-u>call GOVIMHover()<CR>
+nmap <silent> <buffer> <Leader>h :<C-u>call GOVIMHover()<CR>
 
 " autocompletion
 function! Omni()
     call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
                     \ 'name': 'omni',
-                    \ 'whitelist': ['go'],
+                    \ 'whitelist': ['go','perl','python','c','javascript'],
                     \ 'completor': function('asyncomplete#sources#omni#completor')
                     \  }))
 endfunction
@@ -69,3 +69,12 @@ au VimEnter * :call Omni()
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+
