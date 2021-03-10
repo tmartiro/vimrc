@@ -24,19 +24,19 @@ Plug 'morhetz/gruvbox'
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-utils/vim-man'
-Plug 'git@github.com:kien/ctrlp.vim.git'
 Plug 'mbbill/undotree'
 Plug 'dylon/vim-antlr'
 Plug 'govim/govim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'yami-beta/asyncomplete-omni.vim'
 Plug 'preservim/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'git@github.com:ctrlpvim/ctrlp.vim.git'
 call plug#end()
 
 colorscheme gruvbox
 set background=dark
 let mapleader=" " 
-
 
 if executable('rg')
     let g:rg_derive_root='true'
@@ -45,7 +45,6 @@ endif
 let g:ctrlp_use_caching = 0
 
 nnoremap <leader>u :UndotreeShow<CR>
-"nnoremap <leader>pv :wincmd v<bar>:Ex <bar> :vertical resize 30<CR>
 nnoremap <leader>pv :NERDTree<CR>
 nnoremap <leader>ps :Rg<SPACE>
 nnoremap <silent><leader>= :vertical resize +5<CR>
@@ -53,6 +52,17 @@ nnoremap <silent><leader>- :vertical resize -5<CR>
 nnoremap <leader>tv :below vert term<CR>
 nnoremap <leader>th :below term<CR>
 
+" tab management 
+let g:airline#extensions#tabline#enabled = 1
+set hidden
+nmap <leader>T :enew<CR>
+nmap <leader><Right> :bnext<CR>
+nmap <leader><Left> :bnext<CR>
+nmap <leader><Left> :bprevious<CR>
+nmap <leader>bq :bp <BAR> bd #<CR>
+
+
+" golang hint
 nmap <silent> <buffer> <Leader>h :<C-u>call GOVIMHover()<CR>
 
 " autocompletion
