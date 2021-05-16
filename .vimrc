@@ -44,6 +44,9 @@ endif
 
 let g:ctrlp_use_caching = 0
 
+" yank in main clipboard
+set clipboard=unnamedplus
+
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader>pv :NERDTree<CR>
 nnoremap <leader>ps :Rg<SPACE>
