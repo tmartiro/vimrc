@@ -16,13 +16,14 @@ set undofile
 set incsearch
 set colorcolumn=120
 set number relativenumber
+set mmp=5000
+set mouse=a
 let mapleader=" " 
 
 
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'morhetz/gruvbox'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'neovim/nvim-lspconfig'
 Plug 'ray-x/lsp_signature.nvim'
@@ -39,7 +40,27 @@ Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'ryanoasis/vim-devicons'
 Plug 'kdheepak/tabline.nvim'
 Plug 'tpope/vim-commentary'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+" themes plugins
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'morhetz/gruvbox'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'chriskempson/base16-vim'
+Plug 'drewtempelmeyer/palenight.vim'
 call plug#end()
+
+""""""""""""""""""""""""
+" Theming 
+""""""""""""""""""""""""
+" colorscheme onehalflight
+" colorscheme base16-default-dark
+" colorscheme gruvbox
+colorscheme palenight
+set background=dark
+" colorscheme tokyonight
+
+
 
 
 " yank in main clipboard
@@ -47,12 +68,23 @@ set clipboard=unnamedplus
 
 
 nmap <leader>T :enew<CR>
-nmap <leader><Right> :bnext<CR>
-nmap <leader><Left> :bnext<CR>
-nmap <leader><Left> :bprevious<CR>
+nmap <leader><Right> :bnext!<CR>
+nmap <leader><Left> :bprevious!<CR>
 nmap <leader>bq :bp <BAR> bd #<CR>
 
+nmap <leader>nonu :set norelativenumber<CR> :set nonumber<CR>
+nmap <leader>nu :set number<CR> :set relativenumber<CR>
 
+" Lint file on save
+"let g:syntastic_go_checkers = ['go', 'golint', 'govet']
+"autocmd BufWritePre *.go :GoBuild
+
+" Uncomment the following to have Vim jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" plugins properties
 
 lua << EOF
 require'tabline'.setup {
@@ -79,13 +111,6 @@ EOF
 lua << EOF
 require('lualine').setup()
 EOF
-
-
-""""""""""""""""""""""""
-" Theming 
-""""""""""""""""""""""""
-colorscheme gruvbox
-set background=dark
 
 
 
@@ -171,6 +196,8 @@ lua << EOF
 require('gitsigns').setup()
 EOF
 
+nmap <leader>df :Gitsigns diffthis<CR>
+nmap <leader>ph :Gitsigns preview_hunk<CR>
 
 """"""""""""""""""""""""
 " Nvim tree
@@ -231,7 +258,90 @@ configs.gopls = {
 lspconfig.gopls.setup{
  on_attach = function(client, bufnr)
     require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()) -- Note: added from completion plugin
-    require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
+    require "lsp_signature".on_attach({
+        bind=true,
+        hint_enable=true,
+        hanlder_opts={
+            border="rounded"
+            }
+    }, bufnr)  -- Note: add in lsp client on-attach
   end,
 }
 EOF
+
+
+lua << EOF
+require'nvim-tree'.setup {
+  -- disables netrw completely
+  disable_netrw       = true,
+  -- hijack netrw window on startup
+  hijack_netrw        = true,
+  -- open the tree when running this setup function
+  open_on_setup       = false,
+  -- will not open on setup if the filetype is in this list
+  ignore_ft_on_setup  = {},
+  -- closes neovim automatically when the tree is the last **WINDOW** in the view
+  auto_close          = false,
+  -- opens the tree when changing/opening a new tab if the tree wasn't previously opened
+  open_on_tab         = false,
+  -- hijacks new directory buffers when they are opened.
+  update_to_buf_dir   = {
+    -- enable the feature
+    enable = true,
+    -- allow to open the tree if it was previously closed
+    auto_open = true,
+  },
+  -- hijack the cursor in the tree to put it at the start of the filename
+  hijack_cursor       = false,
+  -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
+  update_cwd          = false,
+  -- show lsp diagnostics in the signcolumn
+  diagnostics = {
+    enable = false,
+    icons = {
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
+    }
+  },
+  -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
+  update_focused_file = {
+    -- enables the feature
+    enable      = true,
+    -- update the root directory of the tree to the one of the folder containing the file if the file is not under the current root directory
+    -- only relevant when `update_focused_file.enable` is true
+    update_cwd  = false,
+    -- list of buffer names / filetypes that will not update the cwd if the file isn't found under the current root directory
+    -- only relevant when `update_focused_file.update_cwd` is true and `update_focused_file.enable` is true
+    ignore_list = {}
+  },
+  -- configuration options for the system open command (`s` in the tree by default)
+  system_open = {
+    -- the command to run this, leaving nil should work in most cases
+    cmd  = nil,
+    -- the command arguments as a list
+    args = {}
+  },
+
+  view = {
+    -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
+    width = 30,
+    -- height of the window, can be either a number (columns) or a string in `%`, for top or bottom side placement
+    height = 30,
+    -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
+    side = 'left',
+    -- if true the tree will resize itself after opening a file
+    auto_resize = false,
+    mappings = {
+      -- custom only false will merge the list with the default mappings
+      -- if true, it will only use your list to set the mappings
+      custom_only = false,
+      -- list of mappings to set on the tree manually
+      list = {}
+    }
+  }
+}
+EOF
+
+
