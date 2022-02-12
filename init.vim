@@ -55,8 +55,8 @@ call plug#end()
 """"""""""""""""""""""""
 " colorscheme onehalflight
 " colorscheme base16-default-dark
-" colorscheme gruvbox
-colorscheme palenight
+colorscheme gruvbox
+" colorscheme palenight
 set background=dark
 " colorscheme tokyonight
 
