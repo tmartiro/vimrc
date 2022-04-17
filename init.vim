@@ -48,8 +48,21 @@ Plug 'morhetz/gruvbox'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'chriskempson/base16-vim'
 Plug 'drewtempelmeyer/palenight.vim'
+
+" javascript
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'} " this is for auto complete, prettier and tslinting
+
+
+Plug 'jiangmiao/auto-pairs' "this will auto close ( [ {
+
+" these two plugins will add highlighting and indenting to JSX and TSX files.
+Plug 'yuezk/vim-js'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'maxmellon/vim-jsx-pretty'
+
 call plug#end()
 
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']  " list of CoC extensions needed
 """"""""""""""""""""""""
 " Theming 
 """"""""""""""""""""""""
@@ -226,7 +239,8 @@ local configs = require 'lspconfig/configs'
 if not lspconfig.golangcilsp then
  	configs.golangcilsp = {
 		default_config = {
-			cmd = {'golangci-lint-langserver'},
+			-- cmd = {'golangci-lint-langserver'},
+			cmd = {'gopls'},
 			root_dir = lspconfig.util.root_pattern('.git', 'go.mod', 'main.go'),
 			init_options = {
 					-- command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json" };
@@ -343,5 +357,4 @@ require'nvim-tree'.setup {
   }
 }
 EOF
-
 
