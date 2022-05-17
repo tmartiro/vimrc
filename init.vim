@@ -15,7 +15,7 @@ set undodir=~/.vim/undostore
 set undofile
 set incsearch
 set colorcolumn=120
-set number relativenumber
+"set number relativenumber
 set mmp=5000
 set mouse=a
 let mapleader=" " 
@@ -31,7 +31,6 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'lewis6991/gitsigns.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -42,6 +41,11 @@ Plug 'kdheepak/tabline.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
+" Git plugins
+Plug 'TimUntersberger/neogit'
+Plug 'sindrets/diffview.nvim'
+Plug 'lewis6991/gitsigns.nvim'
+
 " themes plugins
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'morhetz/gruvbox'
@@ -49,8 +53,11 @@ Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'chriskempson/base16-vim'
 Plug 'drewtempelmeyer/palenight.vim'
 
+" terminal
+Plug 'akinsho/toggleterm.nvim'
+
 " javascript
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'} " this is for auto complete, prettier and tslinting
+" Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'} " this is for auto complete, prettier and tslinting
 
 
 Plug 'jiangmiao/auto-pairs' "this will auto close ( [ {
@@ -209,7 +216,8 @@ lua << EOF
 require('gitsigns').setup()
 EOF
 
-nmap <leader>df :Gitsigns diffthis<CR>
+nmap <leader>df :DiffviewOpen<CR>
+nmap <leader>dc :DiffviewClose<CR>
 nmap <leader>ph :Gitsigns preview_hunk<CR>
 
 """"""""""""""""""""""""
