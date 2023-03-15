@@ -186,6 +186,11 @@ _G.packer_plugins = {
     path = "/Users/tmartiro/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["swagger-preview.nvim"] = {
+    loaded = true,
+    path = "/Users/tmartiro/.local/share/nvim/site/pack/packer/start/swagger-preview.nvim",
+    url = "https://github.com/vinnymeller/swagger-preview.nvim"
+  },
   ["telescope-fzf-native.nvim"] = {
     cond = { true },
     loaded = false,

@@ -77,6 +77,12 @@ require('packer').startup(function(use)
     requires = 'nvim-lua/plenary.nvim', 
   }
 
+  -- swagger preview
+  use {
+    "vinnymeller/swagger-preview.nvim",
+    run = "npm install -g swagger-ui-watcher",
+  }
+  
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
 
@@ -194,6 +200,15 @@ require('lualine').setup {
     section_separators = '',
   },
 }
+
+
+-- Enable swagger preview
+require("swagger-preview").setup({
+    -- The port to run the preview server on
+    port = 8000,
+    -- The host to run the preview server on
+    host = "localhost",
+})
 
 -- Enable Comment.nvim
 require('Comment').setup()
@@ -387,12 +402,12 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
 
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
+--   sumneko_lua = {
+--     Lua = {
+--       workspace = { checkThirdParty = false },
+--       telemetry = { enable = false },
+--     },
+--   },
 }
 
 -- Setup neovim lua configuration
