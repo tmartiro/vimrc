@@ -2,8 +2,9 @@ vim.opt.clipboard = 'unnamedplus'
 
 -- Lazy git
 vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { desc = '' })
-vim.keymap.set('n', '<leader>e', ':Explore<CR>', { desc = '' })
 vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>', { desc = '' })
+vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'Close the current buffer' })
+vim.keymap.set('n', '<leader>bd!', ':bd!<CR>', { desc = 'Force close the current buffer' })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*.go',
