@@ -10,6 +10,7 @@ end
 require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
+  use { "ellisonleao/gruvbox.nvim" }
 
   use {
     'nvim-tree/nvim-tree.lua',
@@ -46,10 +47,17 @@ require('packer').startup(function(use)
     end,
   }
 
+  use {'nvim-treesitter/nvim-treesitter-context'}
+
   use { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
+  --
+  -- use { -- Show function signatures on top while scrolling
+  --   'nvim-treesitter/nvim-treesitter-context',
+  --   after = 'nvim-treesitter',
+  -- }
 
   -- Git related plugins
   -- use 'tpope/vim-fugitive'
@@ -162,7 +170,8 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+-- vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme gruvbox]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -197,14 +206,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Set lualine as statusline
 -- See `:help lualine.txt`
-require('lualine').setup {
-  options = {
-    icons_enabled = false,
-    theme = 'onedark',
-    component_separators = '|',
-    section_separators = '',
-  },
-}
+-- require('lualine').setup {
+--   options = {
+--     icons_enabled = false,
+--     theme = 'onedark',
+--     component_separators = '|',
+--     section_separators = '',
+--   },
+-- }
 
 
 -- Enable swagger preview
@@ -342,6 +351,22 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
+}
+
+
+
+require ('treesitter-context').setup {
+  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+  max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+  min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+  line_numbers = true,
+  multiline_threshold = 20, -- Maximum number of lines to collapse for a single context line
+  trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+  mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+  -- Separator between context and content. Should be a single character string, like '-'.
+  -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+  separator = nil,
+  zindex = 20, -- The Z-index of the context window
 }
 
 -- Diagnostic keymaps
