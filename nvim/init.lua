@@ -10,7 +10,6 @@ end
 require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
-  use { "ellisonleao/gruvbox.nvim" }
 
   use {
     'nvim-tree/nvim-tree.lua',
@@ -53,6 +52,13 @@ require('packer').startup(function(use)
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
+
+
+  -- debuger
+  use 'mfussenegger/nvim-dap'
+  use 'rcarriga/nvim-dap-ui'
+  use { "mxsdev/nvim-dap-vscode-js", requires = {"mfussenegger/nvim-dap"} }
+
   --
   -- use { -- Show function signatures on top while scrolling
   --   'nvim-treesitter/nvim-treesitter-context',
@@ -64,7 +70,6 @@ require('packer').startup(function(use)
   -- use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -90,6 +95,13 @@ require('packer').startup(function(use)
     "vinnymeller/swagger-preview.nvim",
     run = "npm install -g swagger-ui-watcher",
   }
+
+
+  -- themes
+  use { "ellisonleao/gruvbox.nvim" }
+  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
+  use { "catppuccin/nvim", as = "catppuccin" }
+
   
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
@@ -171,7 +183,8 @@ vim.wo.signcolumn = 'yes'
 -- Set colorscheme
 vim.o.termguicolors = true
 -- vim.cmd [[colorscheme onedark]]
-vim.cmd [[colorscheme gruvbox]]
+
+vim.cmd.colorscheme "catppuccin"
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -546,3 +559,7 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
+
+
+require("dapui").setup()
+
