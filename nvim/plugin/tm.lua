@@ -34,7 +34,8 @@ vim.opt.clipboard = 'unnamedplus'
 
 -- Lazy git
 vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { desc = '' })
-vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>', { desc = '' })
+-- vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>', { desc = '' })
+vim.keymap.set('n', '<leader>t', ':Oil . <CR>', { desc = '' })
 vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'Close the current buffer' })
 vim.keymap.set('n', '<leader>bd!', ':bd!<CR>', { desc = 'Force close the current buffer' })
 vim.keymap.set('n', '<leader><Left>', ':bprevious<CR>', { desc = 'Switch to previous buffer' })
